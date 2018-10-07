@@ -22,6 +22,11 @@ app.use('/models', express.static(__dirname + '/models'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.get('/', (req, res) => {
+    res.render('homeadmin', {
+      layout: 'mainadmin'
+    });
+  });
 //Three Main Users
 app.get('/students', (req, res) => {
     res.render('homeadmin', {
