@@ -22,11 +22,14 @@ app.use('/models', express.static(__dirname + '/models'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+//Three Main Users
 app.get('/students', (req, res) => {
-  res.render('home');
-});
+    res.render('homeadmin', {
+      layout: 'mainstudents'
+    });
+  });
 
-app.get('/', (req, res) => {
+app.get('/admin', (req, res) => {
     res.render('homeadmin', {
       layout: 'mainadmin'
     });
@@ -38,29 +41,43 @@ app.get('/faculty', (req, res) => {
     });
   });
 
-app.get('/manage/class', (req, res) => {
-    res.render('ManageClass', {
+
+// Admin Pages
+app.get('/admin/faculties', (req, res) => {
+    res.render('adminFaculties', {
       layout: 'mainadmin'
     });
   });
 
-app.get('/manage/students', (req, res) => {
-      res.render('ManageStudents', {
+app.get('/admin/students', (req, res) => {
+    res.render('adminStudents', {
+      layout: 'mainadmin'
+    });
+  });
+
+app.get('/admin/classes', (req, res) => {
+    res.render('adminClasses', {
+      layout: 'mainadmin'
+    });
+  });
+
+  app.get('/admin/faculty/add', (req, res) => {
+      res.render('adminAddfaculty', {
         layout: 'mainadmin'
       });
     });
 
-app.get('/manage/faculties', (req, res) => {
-      res.render('ManageFac', {
-        layout: 'mainadmin'
+    app.get('/admin/students/add', (req, res) => {
+        res.render('adminAddstudents', {
+          layout: 'mainadmin'
+        });
       });
-    });
 
-app.get('/manage/guests', (req, res) => {
-      res.render('ManageGuest', {
-        layout: 'mainadmin'
-      });
-    });
+      app.get('/admin/classes/add', (req, res) => {
+          res.render('adminAddclass', {
+            layout: 'mainadmin'
+          });
+        });
 
 
 app.listen(process.env.PORT || 4000);
