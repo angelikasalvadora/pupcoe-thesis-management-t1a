@@ -184,5 +184,18 @@ app.get('/admin/faculties', (req,res)=>{
 	});
 });
 
+/*app.get('/admin/classes/1', (req, res) => {
+  client.query('SELECT * FROM users where usertype=faculty', (req, data) => {
+    var list = [];
+    for (var i = 1; i < data.rows.length + 1; i++) {
+      list.push(data.rows[i - 1]);
+      }
+      res.render('studentExist', {
+        layout: 'mainadmin',
+        advisersdata: list,
+    });
+  });
+}); */
+
 app.listen(process.env.PORT || 4000);
 console.log('Server started on port 4000.');
