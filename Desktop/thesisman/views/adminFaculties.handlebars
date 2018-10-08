@@ -9,7 +9,7 @@
 			<thead>
 				<tr>
 					<th class="text-center">
-						<label>ID</label>
+						<label>Employee ID</label>
 					</th>
 					<th class="text-center">
 						<label>Name</label>
@@ -24,23 +24,28 @@
 						<label>Admin</label>
 					</th>
 					<th class="text-center">
+						<label>User Type</label>
+					</th>
+					<th class="text-center">
 						<label>Details</label>
 					</th>
 
 				</tr>
 			</thead>
 			<tbody>
-
+						{{#each facultylist}}
 					<tr>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
+						<td class="text-center">{{this.employee_id}}</td>
+						<td class="text-center">{{this.firstname}} {{this.lastname}}</td>
+						<td class="text-center">{{this.email}}</td>
+						<td class="text-center">{{this.phone}}</td>
+							<td class="text-center">{{this.adminstat}}</td>
+							<td class="text-center">{{this.usertype}}</td>
+
 						<td class="text-center"><a href="url">View</a></td>
 
 					</tr>
-
+	{{/each}}
 			</tbody>
 		</table>
 	</div>

@@ -16,7 +16,7 @@
               <br>
 
               <div class="form-group" >
-                 <form action="" method="POST" class="form-group">
+                 <form action="/admin/faculties" method="POST" class="form-group">
                <div>
 
                  <div class="form-group md-col-5" style="margin: 5px">
@@ -30,15 +30,20 @@
 
                  <div class="form-group md-col-5" style="margin: 5px">
 
-                   <input style="" class="form-control" type="text" name="last_name" placeholder="Email" required>
+                   <input style="" class="form-control" type="text" name="employeenumber" placeholder="Employee ID" required>
+                 </div>
+
+                 <div class="form-group md-col-5" style="margin: 5px">
+
+                   <input style="" class="form-control" type="text" name="email" placeholder="Email" required>
                  </div>
                  <div class="form-group md-col-5" style="margin: 5px">
 
-                   <input class="form-control" type="email" name="email" placeholder="Phone Number" required>
+                   <input class="form-control" name="phone" placeholder="Phone Number" required>
                  </div>
 
 <br>
-  &nbsp&nbsp<input type="checkbox" name="" value=""> Make Admin?<br>
+  &nbsp&nbsp<input type="checkbox" name="adminstat" > Make Admin?<br>
 
 
 
@@ -49,20 +54,17 @@
 <br>
                  <div class="form-group md-col-5" style="margin: 5px">
 
-                   <input class="form-control" type="text" name="street" placeholder="Password" required>
+                   <input class="form-control" type="text" name="password" placeholder="Password" required>
                  </div>
-                 <div class="form-group md-col-5" style="margin: 5px">
 
-
-
-                   <input class="form-control" type="number" name="quantity" placeholder="Confirm Password" required>
-                 </div>
                  <div class="form-group" style="margin: 5px">
                  </div>
                  <br>
+
+                 <input type="hidden" name="usertype" value="faculty" readonly="">
+
                  <div class="form-group" style="margin: 5px">
-                   <input type="hidden" name="product_name" value="{{name}}" readonly="">
-                   <input  type="hidden" name="product_id2" value="{{idnumber}}" readonly="">
+
                     <input class="primary-btn order-submit" type="submit"  name="submit" value="Submit">
                  </div>
 

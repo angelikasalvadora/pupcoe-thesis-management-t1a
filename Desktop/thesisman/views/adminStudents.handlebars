@@ -5,11 +5,12 @@
 <br>
 <br>
 	<div class="container">
+
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th class="text-center">
-						<label>ID</label>
+						<label>Student Number</label>
 					</th>
 					<th class="text-center">
 						<label>Name</label>
@@ -28,16 +29,17 @@
 				</tr>
 			</thead>
 			<tbody>
-
+				{{#each studentlist}}
 					<tr>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
+						<td class="text-center">{{this.student_number}}</td>
+						<td class="text-center">{{this.firstname}} {{this.lastname}}</td>
+						<td class="text-center">{{this.email}}</td>
+						<td class="text-center">{{this.phone}}</td>
+
 						<td class="text-center"><a href="url">View</a></td>
 
 					</tr>
-
+	{{/each}}
 			</tbody>
 		</table>
 	</div>
