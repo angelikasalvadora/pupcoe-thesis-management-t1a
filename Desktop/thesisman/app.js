@@ -69,11 +69,7 @@ app.get('/faculty', (req, res) => {
 
 
 
-app.get('/admin/classes', (req, res) => {
-    res.render('adminClasses', {
-      layout: 'mainadmin'
-    });
-  });
+
 
   app.get('/admin/faculty/add', (req, res) => {
       res.render('adminAddfaculty', {
@@ -87,11 +83,7 @@ app.get('/admin/classes', (req, res) => {
         });
       });
 
-      app.get('/admin/classes/add', (req, res) => {
-          res.render('adminAddclass', {
-            layout: 'mainadmin'
-          });
-        });
+
 
 //Add students
 app.post('/admin/students', function (req, res) { // product list with insert new product
@@ -128,7 +120,7 @@ app.post('/admin/students', function (req, res) { // product list with insert ne
 
 
 app.get('/admin/students', (req,res)=>{
-	client.query('SELECT * FROM users;', (req, data)=>{
+	client.query("SELECT * FROM users WHERE usertype='student'", (req, data)=>{
 		var studentlist = [];
 		for (var i = 1; i < data.rows.length+1; i++) {
 				studentlist.push(data.rows[i-1]);
@@ -172,7 +164,7 @@ app.post('/admin/faculties', function (req, res) { // product list with insert n
 });
 
 app.get('/admin/faculties', (req,res)=>{
-	client.query('SELECT * FROM users;', (req, data)=>{
+	client.query("SELECT * FROM users WHERE usertype='faculty'", (req, data)=>{
 		var facultylist = [];
 		for (var i = 1; i < data.rows.length+1; i++) {
 				facultylist.push(data.rows[i-1]);
@@ -184,18 +176,91 @@ app.get('/admin/faculties', (req,res)=>{
 	});
 });
 
-/*app.get('/admin/classes/1', (req, res) => {
-  client.query('SELECT * FROM users where usertype=faculty', (req, data) => {
-    var list = [];
-    for (var i = 1; i < data.rows.length + 1; i++) {
-      list.push(data.rows[i - 1]);
-      }
-      res.render('studentExist', {
-        layout: 'mainadmin',
-        advisersdata: list,
-    });
-  });
-}); */
+//CLASSES
+app.get('/admin/classes/add', function (req, res){
+  client.query("SELECT id AS id, batches AS batches FROM batches;")
+  .then((batches)=>{
+    client.query("SELECT id AS id, year_levels AS year_levels FROM year_levels;")
+    .then((year_levels)=>{
+      client.query("SELECT id AS id, sections AS sections FROM sections;")
+      .then((sections)=>{
+        client.query("SELECT id AS id, firstname AS fname, lastname AS lname FROM users WHERE usertype = 'faculty';")
+        .then((faculties)=>{
+          res.render('adminAddclass', {
+            layout: 'mainadmin',
+            faculties: faculties.rows,
+            batches:batches.rows,
+            year_levels: year_levels.rows,
+            sections: sections.rows
+          })
+        })
+      })
+    })
+  })
+})
+
+app.post('/add_class', function (req, res){
+  client.query("INSERT INTO classes (batch_id, year_level_id, adviser_id, section_id) VALUES ('" + req.body.batch + "', '" + req.body.year_level + "', '" + req.body.user_id + "', '" + req.body.section + "');")
+  .then((results)=>{
+    console.log('Class Added');
+    res.redirect('/admin/classes');
+  })
+  .catch((err)=>{
+    console.log('error', err);
+  })
+})
+
+app.get('/admin/classes', function (req, res){
+  client.query(`
+    SELECT classes.id AS class_id,
+      batches AS batches,
+      sections AS sections,
+      year_levels AS year_levels,
+      firstname AS fname,
+      lastname AS lname
+    FROM classes
+    INNER JOIN year_levels ON year_levels.id = year_level_id
+    INNER JOIN batches ON batches.id = batch_id
+    INNER JOIN sections ON sections.id = section_id
+    INNER JOIN users ON users.id = adviser_id;
+    `)
+    .then((classes)=>{
+    res.render('adminClasses', {
+      layout: 'mainadmin',
+      classes: classes.rows
+    })
+  })
+})
+
+app.get('/admin/classes/:id', function (req, res){
+  client.query(`
+    SELECT classes.id AS class_id,
+      batches.batches AS batch,
+      sections.sections AS section,
+      users.id AS adviser_id,
+      users.firstname AS fname,
+      users.lastname AS lname
+    FROM classes
+    INNER JOIN year_levels ON year_levels.id = year_level_id
+    INNER JOIN batches ON batches.id = batch_id
+    INNER JOIN sections ON sections.id = section_id
+    INNER JOIN users ON users.id = adviser_id
+    WHERE classes.id =` + req.params.id + `;
+    `)
+  .then((class_details)=>{
+    res.render('adminClasses_details', {
+      layout: 'mainadmin',
+      batch: class_details.rows[0].batch,
+      section: class_details.rows[0].section,
+      fname: class_details.rows[0].fname,
+      lname: class_details.rows[0].lname
+    })
+  })
+})
+
+
+
+//end of CLASSES
 
 app.listen(process.env.PORT || 4000);
 console.log('Server started on port 4000.');

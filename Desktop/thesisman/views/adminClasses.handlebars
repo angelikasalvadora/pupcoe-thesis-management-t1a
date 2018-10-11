@@ -15,6 +15,9 @@
 						<label>Batch</label>
 					</th>
 					<th class="text-center">
+						<label>Year Level</label>
+					</th>
+					<th class="text-center">
 						<label>Section</label>
 					</th>
 					<th class="text-center">
@@ -28,16 +31,17 @@
 				</tr>
 			</thead>
 			<tbody>
-
+   {{#each classes}}
 					<tr>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center"><a href="url">View</a></td>
+						<td class="text-center">{{this.class_id}}</td>
+						<td class="text-center">{{this.batches}}</td>
+						<td class="text-center">{{this.year_levels}}</td>
+						<td class="text-center">{{this.sections}}</td>
+						<td class="text-center">{{this.fname}} {{this.lname}}</td>
+						<td class="text-center"><a href="/admin/classes/{{this.class_id}}">View</a></td>
 
 					</tr>
-
+     {{/each}}
 			</tbody>
 		</table>
 	</div>
