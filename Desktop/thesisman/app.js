@@ -22,12 +22,22 @@ app.use('/models', express.static(__dirname + '/models'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-const client = new Client({
+/* const client = new Client({
   database:'thesis',
   user: 'postgres',
   password: 'xxreallay',
   host:'localhost',
   port: 5432
+}); */
+
+
+const client = new Client({
+  database: 'd1oe598mlghr2k',
+  user: 'ovmoigrkqlygem',
+  password: 'd05178ad3051ccc4bce492f7b83dfc1e2a116aea7671cd1c55ddd3a32df68a89',
+  host: 'ec2-23-21-147-71.compute-1.amazonaws.com',
+  port: 5432,
+  ssl: true
 });
 
 client.connect()
